@@ -1,0 +1,99 @@
+<div class="header-container">
+  <button mat-button [routerLink]="['/login']">
+      <mat-icon class="cl-wh">exit_to_app</mat-icon>
+      <span class="cl-wh">Login</span>
+    </button>
+</div>
+<div class="container">
+  <mat-card class="mat-elevation-z8">
+  <a mat-flat-button *ngIf="details" (click)="this.details = null">
+    <mat-icon>keyboard_backspace</mat-icon>
+    BACK
+  </a>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()"
+    autocomplete="off"  *ngIf="!details; else detailsTemp">
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>Select your bank</mat-label>
+          <mat-select (selectionChange)="onChange('state')" formControlName="bank" required>
+            <mat-option *ngFor="let l of list.bank" [value]="l">
+              {{l}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>State in which bank is situated</mat-label>
+          <mat-select formControlName="state" (selectionChange)="onChange('district')" required>
+            <mat-option *ngFor="let f of list.state" [value]="f">
+              {{f}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>District in which bank is situated</mat-label>
+          <mat-select formControlName="district" (selectionChange)="onChange('branch')" required>
+            <mat-option *ngFor="let b of list.district" [value]="b">
+              {{b}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Branch of Bank within District</mat-label>
+          <mat-select formControlName="branch" required>
+            <mat-option *ngFor="let b of list.branch" [value]="b">
+              {{b}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          type="submit"
+          class="login-btn"
+          color="primary"
+        >
+          Find Now
+
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+  <h2 class="or-text"  *ngIf="!details">Or</h2>
+  <mat-card  *ngIf="!details">
+
+      <form [formGroup]="formIfsc" (ngSubmit)="onIfscSubmit(formIfsc.value)"
+      autocomplete="off" >
+        <mat-card-content>
+          <mat-form-field class="full-width-input">
+            <mat-label class="w-c">Enter IFSC Code to know Bank details</mat-label>
+            <input
+              matInput
+              placeholder="IFSC"
+              formControlName="ifsc"
+              required
+            />
+            <mat-error>
+              Please provide a IFSC
+            </mat-error>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            type="submit"
+            class="login-btn"
+            color="primary"
+          >
+            Get Details
+
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+</div>
+<ng-template #detailsTemp>
+  <app-details [details]="details" ></app-details>
+</ng-template>
+<!-- [disabled]=""  -->

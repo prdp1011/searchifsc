@@ -1,0 +1,40 @@
+<h2 mat-dialog-title  class="w-100 space-between"  >
+  Add Branch <mat-icon mat-dialog-close class="c-p material-icons">
+    close
+    </mat-icon>
+</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+ <mat-card-content>
+  <mat-form-field class="w-100"  appearance="outline">
+    <mat-label>Select your bank</mat-label>
+    <mat-select  formControlName="bank">
+      <mat-option *ngFor="let l of list" [value]="l">
+        {{l}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <ng-container *ngFor="let fc of field; let i = index">
+    <mat-form-field class="w-100" appearance="outline" >
+      <mat-label class="w-c">{{display[i]}}</mat-label>
+      <input
+        matInput
+        placeholder=""
+        [formControlName]="fc"
+        required
+      />
+      <mat-error>
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+ </mat-card-content>
+ <mat-card-actions>
+   <button
+     mat-raised-button
+     type="submit"
+     class="w-100"
+     color="primary"
+     >
+     Add
+   </button>
+ </mat-card-actions>
+</form>

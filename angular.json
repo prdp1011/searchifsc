@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "testBank"
+  "defaultProject": "testBank",
+  "cli": {
+    "analytics": false
+  }
 }

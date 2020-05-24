@@ -1,0 +1,95 @@
+{
+  "bankList": [
+    {
+      "id": "ALLA0211921",
+      "bank": "ALLAHABAD BANK",
+      "branch": "PORT BLAIR",
+      "ifsc": "ALLA0211921",
+      "state": "ANDAMAN AND NICOBAR ISLAND",
+      "district": "ANDAMAN"
+    },
+    {
+      "id": "ABUA0211921",
+      "bank": "ABU DHABI COMMERCIAL BANK",
+      "branch": "ADILABAD",
+      "ifsc": "ABUA0211921",
+      "state": "Chennai",
+      "district": "ADILABAD"
+    },
+    {
+      "id": "AHMB0211921",
+      "bank": "AHMEDABAD MERCANTILE COOPERATIVE BANK",
+      "branch": "JHOTWARA",
+      "ifsc": "AHMB0211921",
+      "state": "Delhi",
+      "district": "ANANTAPUR?á"
+    },
+    {
+      "id": "HDFC0211921",
+      "bank": "HDFC BANK",
+      "branch": "MANCHERIAL",
+      "ifsc": "HDFC0211921",
+      "state": "Mumbai",
+      "district": "CUDDAPAH"
+    },
+    {
+      "bank": "ABHYUDAYA COOPERATIVE BANK LIMITED",
+      "branch": "dfhgjhklk",
+      "ifsc": "ALLAh",
+      "state": "hfgjkl;",
+      "district": "gjhkl;",
+      "id": "ALLAh"
+    },
+    {
+      "bank": "ABU DHABI COMMERCIAL BANK",
+      "branch": "AEF",
+      "ifsc": "SAFDB",
+      "state": "sadf",
+      "district": "sDASDAS",
+      "id": "SAFDB"
+    }
+  ],
+  "bank": [
+    "ABHYUDAYA COOPERATIVE BANK LIMITED",
+    "ABU DHABI COMMERCIAL BANK",
+    "AHMEDABAD MERCANTILE COOPERATIVE BANK",
+    "HDFC BANK",
+    "AIRTEL PAYMENTS BANK LIMITED"
+  ],
+  "district": [
+    "ANDAMAN",
+    "ADILABAD"
+  ],
+  "state": [
+    "Mumbai",
+    "Delhi",
+    "Kolkata",
+    "Chennai",
+    "Bangalore",
+    "Hyderabad",
+    "Ahmedabad",
+    "Pune",
+    "Gurgaon",
+    "Jaipur",
+    "Keral",
+    "Goa",
+    "Gujrat",
+    "Jaipur"
+  ],
+  "branch": [
+    "ADILABAD",
+    "JHOTWARA",
+    "MANCHERIAL",
+    "RAJAMPET"
+  ],
+  "ifsc": [
+    "ALLA0211921",
+    "ABUA0211921",
+    "AHMB0211921",
+    "HDFC0211921"
+  ],
+  "auth": {
+    "token": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxcIlBMXpmYWxzZSxcIlBFFibGUiOiJUcnVlIiwiUHJvamVjdFZlcnNpb24iOiIyIiwiVGVtcEFjY2VzcyI6IkZhbHNlIiwiUmVkaXJlY3QiOiJGYWxzZSIsImV4cCI6MTU5MDMyMTMzNCwiaXNzIjoiYXBpLnJlcXRlc3QuY29tIiwiYXVkIjoiKi5yZXF0ZXN0LmNvbSJ9.bUP3NgZaLk6VvUidpxB2KhUW7URQikKmE96yqQK3ESk",
+    "username": "John Doe"
+  }
+}

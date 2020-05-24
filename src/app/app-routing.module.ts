@@ -1,21 +1,20 @@
-import { BranchListComponent } from './branch-list/branch-list.component';
-import { LoginComponent } from './login/login.component';
+import { MainComponent } from './main/main.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent,
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
   },
   {
-    path: '',
+    path: 'list',
     // canLoad: [AuthGuard],
-    component: BranchListComponent,
-
+    loadChildren: () => import('./branch-list/branch-list.module').then(m => m.BranchListModule)
   },
-
+  {
+    path: '', component: MainComponent
+  }
 ];
 
 @NgModule({
