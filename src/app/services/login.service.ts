@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -8,16 +9,25 @@ import { of } from 'rxjs';
 })
 export class LoginService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private router: Router) { }
 
-  login(payload) {
-    // this.http.post(`{environment.url}`, )
-    return of({token: 'loggedINToken', name: 'JOhn Snow'});
+  login(payload): any {
+    return this.http.get(`${environment.url}/auth`);
   }
   setToken(key, value) {
     localStorage.setItem(key, value);
   }
   isLogggedIn() {
-    return true;
+    return !!localStorage.getItem('token');
   }
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/']);
+  }
+  moveToList() {
+    this.router.navigate(['/list']);
+    return false;
+  }
+  // https://indian-cities-api-nocbegfhqg.now.sh/cities
 }

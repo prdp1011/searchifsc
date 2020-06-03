@@ -7,16 +7,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddBranchComponent } from './add-branch/add-branch.component';
 import { Router } from '@angular/router';
 
-const ELEMENT_DATA: any[] = [
-  {branch: 1, ifsc: 'Hydrogen', bank: 1.0079, district: 'H', state: 'delhi', action: ''},
-  ];
 @Component({
   selector: 'app-branch-list',
   templateUrl: './branch-list.component.html',
   styleUrls: ['./branch-list.component.sass']
 })
 export class BranchListComponent implements OnInit {
-   displayedColumns = [...FIELDS, 'action'];
+   displayedColumns = [...FIELDS];
    dataSource = new MatTableDataSource<any>();
    username = '';
    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -41,7 +38,7 @@ export class BranchListComponent implements OnInit {
   addBranch() {
     const dialogRef = this.dialog.open(AddBranchComponent, {width: '800px'});
     dialogRef.afterClosed().subscribe((res) => {
-      if(res) {
+      if (res) {
         this.getDetails();
       }
     });

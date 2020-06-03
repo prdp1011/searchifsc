@@ -1,6 +1,8 @@
+import { LoginService } from './../services/login.service';
 import { MainService } from './../services/main.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 class BankList {
   constructor(
     public bank = [],
@@ -18,41 +20,62 @@ export class MainComponent implements OnInit {
   form: FormGroup;
   formIfsc: FormGroup;
   list = new BankList();
+  isNotFound: boolean;
   details = null;
-  constructor(private fb: FormBuilder,
+  ifscNotFound: boolean;
+  constructor(private fb: FormBuilder, private logServ: LoginService, private router: Router,
               private mainSer: MainService) { }
 
   ngOnInit(): void {
-    this.onChange('bank');
     this.form = this.fb.group({
       bank: ['', Validators.required],
-      state: ['', Validators.required],
-      district: ['', Validators.required],
-      branch: ['', Validators.required]
+      state: [{ value: '', disabled: true }, Validators.required],
+      district: [{ value: '', disabled: true }, Validators.required],
+      branch: [{ value: '', disabled: true }, Validators.required]
     });
     this.formIfsc = this.fb.group({
       ifsc: ['', Validators.required]
     });
+    this.onChange('bank');
+  }
+  resetState() {
+    ['state', 'district', 'branch'].forEach((field) => {
+      this.form.get(field).setValue(null);
+      this.form.get(field).disable();
+    });
   }
   onChange(subAdd) {
     if (subAdd === 'state') {
-      this.list.branch = [];
-      this.list.district = [];
-      this.form.get('state').setValue(null);
+      this.resetState();
     }
-    this.mainSer.getBankDetails(subAdd)
-    .subscribe((res: any) => this.list[subAdd] = res);
+    this.form.get(subAdd).setValue(null);
+    this.mainSer.getDropDownValues(subAdd)
+    .subscribe((res: any) => {
+      this.list[subAdd] = res;
+      this.form.get(subAdd).enable();
+    });
   }
   onSubmit() {
+    this.isNotFound = false;
     if (this.form.valid) {
-      this.mainSer.searchDetails()
-    .subscribe((res) => this.details = res);
+      this.mainSer.searchDetails(this.form.value)
+    .subscribe((res) => {
+      this.details = res[0];
+      if (!res[0]) {
+        this.isNotFound = true;
+      }
+    });
     }
   }
   onIfscSubmit({ifsc}) {
+    this.ifscNotFound = false;
     if (this.formIfsc.valid) {
-      this.mainSer.getDetails(ifsc)
-    .subscribe((res) => this.details = res);
+      this.mainSer.getIfsc(ifsc).subscribe(res => {
+        this.details = res;
+        if (!res) {
+          this.ifscNotFound = true;
+        }
+      }, () =>  this.ifscNotFound = true);
     }
   }
 

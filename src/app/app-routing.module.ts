@@ -1,6 +1,8 @@
 import { MainComponent } from './main/main.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
+import { AuthGuard } from './auth.guard';
+import { AuthCompGuard } from './auth-comp.guard';
 
 const routes: Routes = [
   {
@@ -9,11 +11,13 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    // canLoad: [AuthGuard],
+    canLoad: [AuthGuard],
     loadChildren: () => import('./branch-list/branch-list.module').then(m => m.BranchListModule)
   },
   {
-    path: '', component: MainComponent
+    path: '',
+    canActivate: [AuthCompGuard],
+    component: MainComponent
   }
 ];
 

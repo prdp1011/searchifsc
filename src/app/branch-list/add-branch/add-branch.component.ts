@@ -11,7 +11,7 @@ import { BranchlistService } from 'src/app/services/branchlist.service';
 })
 export class AddBranchComponent implements OnInit {
   form: FormGroup;
-  list = [];
+  list = {states: [], bank: [], district: []};
   field = [...FIELDS];
   display = [...DISPLAY_LIST];
   constructor(private fb: FormBuilder,
@@ -23,15 +23,26 @@ export class AddBranchComponent implements OnInit {
     this.display.splice(0, 1);
     this.createForm();
     this.branchServ.getBanks().subscribe((res: any) => {
-      this.list = res;
+      this.list.bank = res;
       this.form.get('bank').setValue(res[0]);
+    });
+    this.branchServ.getStates().subscribe(states => {
+      this.list.states = states;
     });
 
 
   }
+  onChangeState() {
+    const state = this.form.get('state').value;
+    this.form.get('district').setValue(null);
+    this.branchServ.getDistrict(state).subscribe(states => {
+      this.list.district = states;
+    });
+  }
   createForm() {
-    const obj = {};
-    obj['bank'] = [null, Validators.required];
+    const obj = {
+      bank: [null, Validators.required]
+    };
     this.field.forEach(li => {
       obj[li] = ['', Validators.required];
     });

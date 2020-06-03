@@ -1,8 +1,8 @@
 import { environment } from './../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import * as _ from 'lodash';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -10,23 +10,25 @@ import { map, mergeMap } from 'rxjs/operators';
 })
 export class MainService {
 
-  constructor(private http: HttpClient) { }
-
-  getIfsc() {
-    return this.http.get(`${environment.url}/ifsc`)
-    .pipe(map((lis) => {
-      const i = Math.floor(Math.random() * 4);
-      return lis[i];
-    }));
+  constructor(private http: HttpClient) {
   }
-  searchDetails() {
-    return this.getIfsc().pipe(mergeMap((id) => this.getDetails(id)));
+  getBankGridList() {
+    return this.http.get(`${environment.url}/bankList`);
   }
-  getDetails(id) {
+  // done
+  searchDetails(list) {
+    return this.getBankGridList()
+    .pipe(map(lis => _.filter(lis, list)));
+  }
+  getIfsc(id) {
     return this.http.get(`${environment.url}/bankList/${id}`);
   }
 
-  getBankDetails(add) {
-    return this.http.get(`${environment.url}/${add}`);
+  getDropDownValues(add) {
+    return this.getBankGridList()
+    .pipe(map(res => _.uniq(_.map(res, b => b[add]))));
   }
+
+
+
 }

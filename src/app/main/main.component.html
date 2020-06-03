@@ -20,6 +20,7 @@
               {{l}}
             </mat-option>
           </mat-select>
+          <mat-error>Please Select a value</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>State in which bank is situated</mat-label>
@@ -28,6 +29,7 @@
               {{f}}
             </mat-option>
           </mat-select>
+          <mat-error>Please Select a value</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>District in which bank is situated</mat-label>
@@ -36,6 +38,7 @@
               {{b}}
             </mat-option>
           </mat-select>
+          <mat-error>Please Select a value</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Branch of Bank within District</mat-label>
@@ -44,8 +47,11 @@
               {{b}}
             </mat-option>
           </mat-select>
+          <mat-error>Please Select a value</mat-error>
         </mat-form-field>
-
+        <mat-error style="text-align: center;" *ngIf="isNotFound">
+          Not Found
+        </mat-error>
       </mat-card-content>
       <mat-card-actions>
         <button
@@ -62,7 +68,6 @@
   </mat-card>
   <h2 class="or-text"  *ngIf="!details">Or</h2>
   <mat-card  *ngIf="!details">
-
       <form [formGroup]="formIfsc" (ngSubmit)="onIfscSubmit(formIfsc.value)"
       autocomplete="off" >
         <mat-card-content>
@@ -75,9 +80,12 @@
               required
             />
             <mat-error>
-              Please provide a IFSC
+              Please Enter a IFSC
             </mat-error>
           </mat-form-field>
+          <mat-error style="text-align: center;" *ngIf="ifscNotFound">
+            Not Found
+          </mat-error>
         </mat-card-content>
         <mat-card-actions>
           <button
@@ -89,6 +97,7 @@
             Get Details
 
           </button>
+
         </mat-card-actions>
       </form>
     </mat-card>

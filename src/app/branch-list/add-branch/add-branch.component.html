@@ -7,25 +7,55 @@
  <mat-card-content>
   <mat-form-field class="w-100"  appearance="outline">
     <mat-label>Select your bank</mat-label>
-    <mat-select  formControlName="bank">
-      <mat-option *ngFor="let l of list" [value]="l">
+    <mat-select  formControlName="bank" required>
+      <mat-option *ngFor="let l of list.bank" [value]="l">
+        {{l}}
+      </mat-option>
+    </mat-select>
+    <mat-error>
+      This is required field
+    </mat-error>
+  </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline" >
+      <mat-label class="w-c">Branch</mat-label>
+      <input
+        matInput
+        placeholder=""
+        formControlName="branch"
+        required
+      />
+      <mat-error>
+        This is required field
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline" >
+      <mat-label class="w-c">IFSC Code</mat-label>
+      <input
+        matInput
+        placeholder=""
+        formControlName="ifsc"
+        required
+      />
+      <mat-error>
+        This is required field
+      </mat-error>
+    </mat-form-field>
+  <mat-form-field class="w-100"  appearance="outline">
+    <mat-label>State</mat-label>
+    <mat-select  formControlName="state" required (selectionChange)="onChangeState()" >
+      <mat-option *ngFor="let l of list.states" [value]="l">
         {{l}}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <ng-container *ngFor="let fc of field; let i = index">
-    <mat-form-field class="w-100" appearance="outline" >
-      <mat-label class="w-c">{{display[i]}}</mat-label>
-      <input
-        matInput
-        placeholder=""
-        [formControlName]="fc"
-        required
-      />
-      <mat-error>
-      </mat-error>
-    </mat-form-field>
-  </ng-container>
+  <mat-form-field class="w-100"  appearance="outline">
+    <mat-label>District</mat-label>
+    <mat-select  formControlName="district" required>
+      <mat-option *ngFor="let l of list.district" [value]="l">
+        {{l}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
  </mat-card-content>
  <mat-card-actions>
    <button
