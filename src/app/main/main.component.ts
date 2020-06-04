@@ -70,10 +70,10 @@ export class MainComponent implements OnInit {
   onIfscSubmit({ifsc}) {
     this.ifscNotFound = false;
     if (this.formIfsc.valid) {
-      this.mainSer.getIfsc(ifsc).subscribe(res => {
-        this.details = res;
-        if (!res) {
-          this.ifscNotFound = true;
+      this.mainSer.searchDetails({ifsc}).subscribe(res => {
+        this.details = res[0];
+        if (!res[0]) {
+          this.notFound();
         }
       }, () =>  this.notFound());
     }

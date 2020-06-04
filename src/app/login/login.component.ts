@@ -2,6 +2,7 @@ import { LoginService } from '../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private snackBar: MatSnackBar,
     private logServ: LoginService
   ) { }
 
@@ -28,13 +30,20 @@ export class LoginComponent implements OnInit {
      if (this.form.valid && !this.isLoading) {
       this.isLoading = true;
       this.logServ.login(this.form.value)
-       .subscribe(({token}) => {
-          this.isLoading = false;
-          this.logServ.setToken('token', token);
-          this.logServ.setToken('name', this.form.value.username);
-          this.router.navigateByUrl('list');
+       .subscribe((res) => {
+         if (res?.token) {
+           this.logServ.setToken('token', res.token);
+           this.logServ.setToken('name', this.form.value.username);
+           this.router.navigateByUrl('list');
+         } else {
+          this.snackBar.open(res, 'ok', {
+            duration: 2000, });
+         }
+         this.isLoading = false;
         },
-        () => {
+        (err) => {
+          this.snackBar.open(err.error.text, 'ok', {
+            duration: 2000, });
           this.isLoading = false;
         }
        );

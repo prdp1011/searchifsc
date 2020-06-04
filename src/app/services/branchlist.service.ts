@@ -1,49 +1,48 @@
 import { environment } from './../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class BranchlistService {
+  url = `${environment.url}/bank`;
+  headers: HttpHeaders;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getBranchList() {
-    return this.http.get(`${environment.url}/bankList`);
-  }
-  addBranch(data) {
-    data['id'] = data.ifsc;
-    return this.http.post(`${environment.url}/bankList`, data);
+  getheader() {
+    this.headers = new HttpHeaders({
+      Authorization: localStorage.getItem('token')
+    });
+    return {headers: this.headers};
   }
 
-  getBanks() {
-    return this.http.get(`${environment.url}/bank`);
+  getBranchList() {
+    return this.http.get(`${this.url}/bankList`, this.getheader());
   }
+  addBranch(data) {
+    const h = this.getheader();
+    return this.http.post(`${this.url}/create`,
+     data,  { ...h, responseType: 'text' as 'json'});
+  }
+
   // Cities
-  getBankList() {
-    return this.http.get(`${environment.url}/bank`);
+  getBanks() {
+    return this.http.get(`${this.url}/bank`, this.getheader());
   }
-  getCitiesArray() {
-    return this.http.get(`${environment.url}/cities`);
+
+  getStates(): Observable<any> {
+    return this.http.get(`${this.url}/state`, this.getheader());
   }
-  getStates() {
-    return this.getCitiesArray()
-    .pipe(map(res => {
-      return _.orderBy(_.uniq(_.map(res, 'State')));
-    }));
-    // cities
+  getDistrict(state): Observable<any> {
+    return this.http.post(`${this.url}/districts`, {state}, this.getheader());
   }
-  getDistrict(State) {
-    return this.getCitiesArray()
-    .pipe(map(res => {
-      return _.orderBy(_.uniq(
-        (_.map(
-          _.reject(res, (list) => list.State !== State),
-          'District'))));
-    }));
+  logout() {
+    return this.http.post(`${environment.url}/app/logout`, {});
   }
 }

@@ -44,8 +44,9 @@ export class BranchListComponent implements OnInit {
     });
   }
   logout() {
-    this.router.navigate(['/']);
+    this.branchServ.logout().subscribe();
     localStorage.removeItem('token');
+    this.router.navigate(['/']);
   }
   getUSerName() {
     return localStorage.getItem('name');

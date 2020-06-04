@@ -10,41 +10,25 @@ import { of } from 'rxjs/internal/observable/of';
   providedIn: 'root'
 })
 export class MainService {
-  private bankList = [];
+  private url = `${environment.url}/main`;
   constructor(private http: HttpClient) {
   }
-  getBankGridList() {
-    if (!this.bankList.length) {
-      return this.http.get(`${environment.url}/bankList`)
-      .pipe(tap((res: any) => this.bankList = res));
-    }
-    return of(this.bankList);
-  }
-  // done
-  searchDetails(list) {
-    return this.getBankGridList()
-    .pipe(map(lis => _.filter(lis, list)));
-  }
-  getIfsc(id) {
-    return this.http.get(`${environment.url}/bankList/${id}`);
+
+
+  searchDetails(payload) {
+    return this.http.post( `${this.url}/find`, payload);
   }
 
-  getDropDownValues(add, list) {
-    return this.getBankGridList()
-    .pipe(map(res => _.uniq(_.map(this.filterList(res, list), b => b[add]))));
-  }
-  filterList(lis, {state, bank, district}) {
+  getDropDownValues(field, {state, bank, district}) {
     const data = Object.assign({},
       state && {state},
       bank && {bank},
       district && {district}
     );
-    if (bank) {
-      return  _.filter(lis, data);
-    }
-    return lis;
+    const payload = {
+      data, field
+    };
+    return this.http.post( `${this.url}/lists`, payload);
   }
-
-
 
 }

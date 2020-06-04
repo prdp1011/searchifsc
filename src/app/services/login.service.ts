@@ -13,7 +13,7 @@ export class LoginService {
               private router: Router) { }
 
   login({username, password}): any {
-    return this.http.get(`${environment.url}/auth?username=${username}&password=${password}`);
+    return this.http.post(`${environment.url}/app/login`, {username, password});
   }
   setToken(key, value) {
     localStorage.setItem(key, value);
