@@ -3,14 +3,9 @@ import { MainService } from './../services/main.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-class BankList {
-  constructor(
-    public bank = [],
-    public state = [],
-    public district = [],
-    public branch = []
-  ) {}
-}
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { BankList } from '../model/main.model';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -23,7 +18,8 @@ export class MainComponent implements OnInit {
   isNotFound: boolean;
   details = null;
   ifscNotFound: boolean;
-  constructor(private fb: FormBuilder, private logServ: LoginService, private router: Router,
+  constructor(private fb: FormBuilder,
+              private snackBar: MatSnackBar, private router: Router,
               private mainSer: MainService) { }
 
   ngOnInit(): void {
@@ -49,7 +45,7 @@ export class MainComponent implements OnInit {
       this.resetState();
     }
     this.form.get(subAdd).setValue(null);
-    this.mainSer.getDropDownValues(subAdd)
+    this.mainSer.getDropDownValues(subAdd, this.form.value)
     .subscribe((res: any) => {
       this.list[subAdd] = res;
       this.form.get(subAdd).enable();
@@ -62,10 +58,14 @@ export class MainComponent implements OnInit {
     .subscribe((res) => {
       this.details = res[0];
       if (!res[0]) {
-        this.isNotFound = true;
+        this.notFound();
       }
     });
     }
+  }
+  notFound() {
+    this.snackBar.open('Not Found', 'ok', {
+      duration: 2000, });
   }
   onIfscSubmit({ifsc}) {
     this.ifscNotFound = false;
@@ -75,7 +75,7 @@ export class MainComponent implements OnInit {
         if (!res) {
           this.ifscNotFound = true;
         }
-      }, () =>  this.ifscNotFound = true);
+      }, () =>  this.notFound());
     }
   }
 

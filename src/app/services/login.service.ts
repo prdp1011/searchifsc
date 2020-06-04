@@ -10,10 +10,10 @@ import { of } from 'rxjs';
 export class LoginService {
 
   constructor(private http: HttpClient,
-    private router: Router) { }
+              private router: Router) { }
 
-  login(payload): any {
-    return this.http.get(`${environment.url}/auth`);
+  login({username, password}): any {
+    return this.http.get(`${environment.url}/auth?username=${username}&password=${password}`);
   }
   setToken(key, value) {
     localStorage.setItem(key, value);
@@ -29,5 +29,5 @@ export class LoginService {
     this.router.navigate(['/list']);
     return false;
   }
-  // https://indian-cities-api-nocbegfhqg.now.sh/cities
+
 }
