@@ -29,5 +29,9 @@ export class LoginService {
     this.router.navigate(['/list']);
     return false;
   }
+  moveToMain() {
+    this.router.navigate(['/']);
+    return false;
+  }
 
 }

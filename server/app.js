@@ -32,6 +32,6 @@ app.use('/main', main);
 app.use('/app', auth);
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log('Authentication service started on port 3000');
+  console.log('server started on port 3000');
 });
 
